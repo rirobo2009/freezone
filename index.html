@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qualifying Free Zone Person — 0% Corporate Tax Eligibility Checker</title>
+<style>
+  :root{
+    --paper:#F5F0E6;--paper-2:#EFE8D8;--ink:#1C2A3A;--ink-soft:#3A4A5C;
+    --navy:#16324F;--navy-2:#1E4568;--gold:#B08A2E;--gold-soft:#D9BC6A;--line:#D8CDB4;
+    --green:#256B4A;--green-bg:#E4F0E8;--red:#93321F;--red-bg:#F5E4DF;
+    --amber:#8A6414;--amber-bg:#F5ECD6;
+    --shadow:0 2px 10px rgba(28,42,58,.08);--shadow-lg:0 8px 30px rgba(28,42,58,.14);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:Georgia,'Times New Roman',serif;background:var(--paper);color:var(--ink);line-height:1.6;padding:24px 16px 80px}
+  .wrap{max-width:820px;margin:0 auto}
+
+  header.masthead{border-bottom:3px double var(--navy);padding-bottom:18px;margin-bottom:8px}
+  .head-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+  .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
+  h1{font-size:30px;line-height:1.15;color:var(--navy);font-weight:400;letter-spacing:-.01em}
+  h1 .rate{color:var(--gold);font-style:italic}
+  .sub{margin-top:10px;color:var(--ink-soft);font-size:15px;max-width:640px}
+  .explore{flex-shrink:0;margin-bottom:3px;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:.03em;color:var(--navy);background:transparent;border:1.5px solid var(--navy);border-radius:8px;padding:9px 16px;text-decoration:none;transition:.15s;white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
+  .explore:hover{background:var(--navy);color:#fff}
+  .explore svg{width:13px;height:13px}
+
+  .legal-strip{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin:16px 0 26px;letter-spacing:.01em;line-height:1.5}
+  .legal-strip strong{color:var(--navy)}
+
+  .progress{display:flex;align-items:center;gap:6px;margin-bottom:22px;font-family:'Helvetica Neue',Arial,sans-serif;flex-wrap:wrap}
+  .pip{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink-soft);letter-spacing:.03em}
+  .pip .dot{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--line);background:#fff;display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--ink-soft);flex-shrink:0}
+  .pip.active .dot{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .pip.done .dot{background:var(--green);color:#fff;border-color:var(--green)}
+  .pip.fail .dot{background:var(--red);color:#fff;border-color:var(--red)}
+  .pip .sep{width:14px;height:1px;background:var(--line)}
+
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);padding:26px 26px 24px;margin-bottom:20px}
+  .step-num{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:8px}
+  .q{font-size:20px;color:var(--navy);font-weight:400;margin-bottom:6px;line-height:1.3}
+  .q-note{font-size:13.5px;color:var(--ink-soft);margin-bottom:18px;border-left:3px solid var(--gold-soft);padding-left:12px}
+  .q-note code{font-family:'SF Mono',Menlo,Consolas,monospace;font-size:12px;background:var(--paper-2);padding:1px 5px;border-radius:3px}
+
+  .info{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--navy);color:#fff;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;font-weight:700;font-style:italic;cursor:help;vertical-align:middle;margin-left:6px;position:relative;flex-shrink:0;line-height:1;user-select:none}
+  .info:hover,.info:focus,.info.open{background:var(--gold);outline:none}
+  .info .tip{position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);width:min(340px,78vw);background:var(--navy);color:#F5F0E6;font-family:'Helvetica Neue',Arial,sans-serif;font-style:normal;font-weight:400;font-size:12.5px;line-height:1.5;letter-spacing:.01em;padding:12px 14px;border-radius:8px;box-shadow:var(--shadow-lg);opacity:0;visibility:hidden;transition:opacity .15s;z-index:50;text-align:left;pointer-events:none}
+  .info .tip::after{content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--navy)}
+  .info .tip cite{display:block;margin-top:7px;padding-top:6px;border-top:1px solid rgba(255,255,255,.2);color:var(--gold-soft);font-style:normal;font-size:11px;letter-spacing:.02em}
+  .info:hover .tip,.info:focus .tip,.info.open .tip{opacity:1;visibility:visible}
+  .info.open .tip{pointer-events:auto}
+  .info.tip-left .tip{left:auto;right:0;transform:none}
+  .info.tip-left .tip::after{left:auto;right:6px;transform:none}
+
+  .options{display:flex;flex-direction:column;gap:10px}
+  .opt{text-align:left;font-family:inherit;font-size:15.5px;color:var(--ink);background:var(--paper);border:1.5px solid var(--line);border-radius:8px;padding:14px 16px;cursor:pointer;transition:.15s;line-height:1.4;display:flex;align-items:flex-start;gap:12px;width:100%}
+  .opt:hover{border-color:var(--navy);background:#fff;box-shadow:var(--shadow)}
+  .opt:focus-visible{outline:3px solid var(--gold-soft);outline-offset:2px}
+  .opt .key{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:12px;color:var(--navy);border:1.5px solid var(--navy);border-radius:5px;min-width:26px;height:26px;display:grid;place-items:center;flex-shrink:0}
+  .opt .lbl{flex:1}
+  .opt .lbl small{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+
+  .num-row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+  .field{display:flex;flex-direction:column;gap:5px;flex:1;min-width:180px}
+  .field label{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);font-weight:700;display:flex;align-items:center}
+  .field input{font-family:inherit;font-size:16px;padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%}
+  .field input:focus{outline:none;border-color:var(--navy);background:#fff}
+  .btn{font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:14px;letter-spacing:.03em;color:#fff;background:var(--navy);border:none;border-radius:8px;padding:13px 22px;cursor:pointer;transition:.15s}
+  .btn:hover{background:var(--navy-2)}
+  .btn:focus-visible{outline:3px solid var(--gold-soft);outline-offset:2px}
+  .btn.ghost{background:transparent;color:var(--navy);border:1.5px solid var(--navy)}
+  .btn.ghost:hover{background:var(--paper-2)}
+
+  .back{font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;color:var(--ink-soft);background:none;border:none;cursor:pointer;margin-top:18px;padding:4px 0}
+  .back:hover{color:var(--navy);text-decoration:underline}
+
+  .dz-search{font-family:inherit;font-size:15px;padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink);width:100%;margin-bottom:14px}
+  .dz-search:focus{outline:none;border-color:var(--navy);background:#fff}
+  .dz-groups{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:8px;padding:6px 0;background:var(--paper)}
+  .dz-emirate{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);padding:10px 16px 4px}
+  .dz-item{font-size:14px;color:var(--ink);padding:4px 16px 4px 28px}
+  .dz-item.hit{background:var(--amber-bg)}
+  .dz-empty{font-size:13px;color:var(--ink-soft);padding:10px 16px;font-style:italic}
+
+  .verdict{border-radius:10px;padding:26px;margin-bottom:20px;border:1px solid}
+  .verdict.pass{background:var(--green-bg);border-color:#B8D8C6}
+  .verdict.fail{background:var(--red-bg);border-color:#E3C4BB}
+  .verdict.review{background:var(--amber-bg);border-color:#E4D2A0}
+  .verdict .tag{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}
+  .verdict.pass .tag{color:var(--green)}
+  .verdict.fail .tag{color:var(--red)}
+  .verdict.review .tag{color:var(--amber)}
+  .verdict h2{font-size:23px;font-weight:400;color:var(--navy);margin-bottom:8px;line-height:1.25}
+  .verdict .rate-line{font-size:17px;margin:14px 0;padding:12px 16px;background:rgba(255,255,255,.6);border-radius:8px;border-left:4px solid}
+  .verdict.pass .rate-line{border-color:var(--green)}
+  .verdict.fail .rate-line{border-color:var(--red)}
+  .verdict.review .rate-line{border-color:var(--amber)}
+  .verdict .rate-line b{color:var(--navy)}
+  .verdict p{font-size:15px;color:var(--ink-soft);margin-top:10px}
+  .verdict .cta{font-size:14px;color:var(--navy);margin-top:16px;padding-top:14px;border-top:1px solid rgba(28,42,58,.15)}
+  .verdict .cta a{color:var(--gold);font-weight:700;text-decoration:none}
+  .verdict .cta a:hover{text-decoration:underline}
+
+  .facts h3,.path h3{font-family:'Helvetica Neue',Arial,sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  .fact{margin-bottom:16px;padding-left:16px;border-left:3px solid var(--gold-soft)}
+  .fact .ft{font-size:15px;color:var(--navy);font-weight:400;margin-bottom:3px}
+  .fact .fb{font-size:14px;color:var(--ink-soft)}
+  .fact cite{display:block;font-family:'Helvetica Neue',Arial,sans-serif;font-style:normal;font-size:11.5px;color:var(--gold);margin-top:5px;letter-spacing:.02em}
+
+  .path-row{display:flex;gap:12px;align-items:flex-start;font-size:14px;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .path-row:last-child{border-bottom:none}
+  .path-row .pq{color:var(--ink-soft);flex:1}
+  .path-row .pa{color:var(--navy);font-weight:400;text-align:right;max-width:45%}
+  .path-row .pa.no{color:var(--red)}
+  .path-row .pa.yes{color:var(--green)}
+
+  .disclaimer{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11.5px;color:var(--ink-soft);background:var(--paper-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;line-height:1.55;margin-top:8px}
+  .disclaimer strong{color:var(--navy)}
+
+  footer{text-align:center;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;color:var(--ink-soft);margin-top:30px;letter-spacing:.03em;line-height:1.7}
+  footer .verified{color:var(--navy);font-weight:700;letter-spacing:.06em}
+  .hide{display:none}
+
+  .lead-modal{position:fixed;inset:0;background:rgba(22,50,79,.45);display:none;align-items:center;justify-content:center;z-index:9999;padding:18px}
+  .lead-modal.show{display:flex}
+  .lead-box{width:100%;max-width:460px;background:#fff;border-radius:10px;border:1px solid var(--line);box-shadow:var(--shadow-lg);padding:26px}
+  .lead-box h2{margin:0 0 8px;font-family:Georgia,serif;font-weight:400;color:var(--navy);font-size:22px}
+  .lead-box p{margin:0 0 18px;color:var(--ink-soft);font-size:13px;font-family:'Helvetica Neue',Arial,sans-serif;line-height:1.55}
+  .lead-box .form-row{margin-bottom:13px;display:block}
+  .lead-box label{display:block;margin-bottom:5px;font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+  .lead-box input{width:100%;padding:11px 12px;border:1.5px solid var(--line);border-radius:8px;font-family:inherit;font-size:15px;background:var(--paper);color:var(--ink)}
+  .lead-box input:focus{outline:none;border-color:var(--navy);background:#fff}
+  .lead-error{color:var(--red);font-size:12px;display:none;margin-bottom:12px;font-family:'Helvetica Neue',Arial,sans-serif}
+  .lead-box .btn{width:100%;justify-content:center;margin-top:4px}
+
+  @media (max-width:560px){
+    h1{font-size:23px}.head-top{flex-direction:column}.explore{align-self:flex-start}
+    .card{padding:20px 18px}.verdict{padding:20px}.pip .lbl-txt{display:none}.info .tip{width:min(280px,80vw)}
+  }
+  @media print{
+    .opt,.btn,.back,.progress,.explore,.info{display:none!important}
+    body{background:#fff}.card,.verdict{box-shadow:none;break-inside:avoid}
+  }
+</style>
+</head>
+<body>
+<div class="lead-modal" id="leadModal">
+  <div class="lead-box">
+    <h2>User Details Required</h2>
+    <p>Please enter your details to continue. Your details may be recorded by this tool provider. Other data entered in the tool is not transmitted.</p>
+    <div class="lead-error" id="leadError">Please complete name, company name and a valid email address.</div>
+    <div class="form-row">
+      <label for="leadName">Name</label>
+      <input type="text" id="leadName" placeholder="Your name">
+    </div>
+    <div class="form-row">
+      <label for="leadCompany">Company name</label>
+      <input type="text" id="leadCompany" placeholder="Company name">
+    </div>
+    <div class="form-row">
+      <label for="leadEmail">Email</label>
+      <input type="text" id="leadEmail" placeholder="name@company.com">
+    </div>
+    <button class="btn" id="leadSubmitBtn">Continue to tool</button>
+  </div>
+</div>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="head-top">
+      <div>
+        <div class="eyebrow">UAE Corporate Tax · Free Zone Regime</div>
+        <h1>Qualifying Free Zone Person<br>eligibility check for the <span class="rate">0% tax rate</span></h1>
+      </div>
+      <a class="explore" href="https://nkr.ae/automations" target="_blank" rel="noopener">Explore more
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
+      </a>
+    </div>
+    <p class="sub">A step-by-step decision tree that tests your Free Zone entity against every cumulative condition in the law. Each answer is checked against the exact article that governs it.</p>
+  </header>
+
+  <div class="legal-strip">
+    <strong>Legal basis (primary sources only):</strong> Federal Decree-Law No. 47 of 2022 (as amended by FDL No. 60 of 2023 &amp; FDL No. 40 of 2024) · Cabinet Decision No. 100 of 2023 · Ministerial Decision No. 229 of 2025 · Ministerial Decision No. 84 of 2025 (audited financial statements) · Cabinet Decision No. 59 of 2017 (Designated Zones) · FTA Corporate Tax Guide CTGFZP1.
+  </div>
+
+  <div class="progress" id="progress"></div>
+  <div id="stage"></div>
+
+  <footer>
+    Not tax advice. Confirm any position against the primary legislation and a qualified UAE tax adviser before filing.<br>
+    <span class="verified">Designed and verified by <a href="https://nkr.ae" target="_blank" rel="noopener" style="color:var(--navy);text-decoration:none;border-bottom:1px solid var(--gold-soft)">NKR Auditing LLC</a></span>
+  </footer>
+</div>
+
+<script>
+const CITE={
+  fzp:"Art. 18(1) & Art. 1, FDL 47/2022",
+  substance:"Art. 18(1)(a), FDL 47/2022; Art. 8, CD 100/2023",
+  election:"Art. 18(1)(c) with Art. 19, FDL 47/2022",
+  alp:"Art. 18(1)(d), FDL 47/2022; Arts. 34 & 55; MD 97/2023 Art. 2",
+  audit:"Art. 5(1)(b), MD 229/2025; MD 84/2025",
+  qiFramework:"Art. 18(1)(b), FDL 47/2022; Art. 3, CD 100/2023",
+  qi_fzp:"Art. 3(1)(a) & 3(2), CD 100/2023",
+  qi_nonfz:"Art. 3(1)(b), CD 100/2023",
+  qi_other:"Art. 3(1)(d), CD 100/2023",
+  qa:"Art. 2(1), MD 229/2025",
+  excl:"Art. 2(2), MD 229/2025",
+  natural:"Art. 2(2)(a), MD 229/2025",
+  deminimis:"Art. 3, MD 229/2025; Art. 4, CD 100/2023",
+  breach:"Art. 5(2), MD 229/2025",
+  designated:"Art. 2(1)(l) & 2(3)(l), MD 229/2025; CD 59/2017",
+  beneficial:"Art. 3(3), CD 100/2023",
+  pe:"Art. 5, CD 100/2023",
+  immovable:"Art. 6, CD 100/2023"
+};
+
+const DESIGNATED_ZONES={
+  "Abu Dhabi":["Free Trade Zone of Khalifa Port","Abu Dhabi Airport Free Zone","Khalifa Industrial Zone","Al Ain International Airport Free Zone","Al Butain International Airport Free Zone"],
+  "Dubai":["Jebel Ali Free Zone (North-South)","Dubai Cars and Automotive Zone (DUCAMZ)","Dubai Textile City","Free Zone Area in Al Quoz","DAFZA Industrial Park Free Zone – Al Qusais","Dubai Aviation City","Dubai Airport Free Zone","International Humanitarian City – Jebel Ali","Dubai CommerCity"],
+  "Sharjah":["Hamriyah Free Zone","Sharjah Airport International Free Zone"],
+  "Ajman":["Ajman Free Zone"],
+  "Umm Al Quwain":["Umm Al Quwain Free Trade Zone in Ahmed Bin Rashid Port","Umm Al Quwain Free Trade Zone on Sheikh Mohammed Bin Zayed Road"],
+  "Ras Al Khaimah":["RAK Port Free Zone","RAK Maritime City Free Zone","RAK Airport Free Zone","Al Hamra Industrial Zone – Free Zone","Al Ghail Industrial Zone – Free Zone","Al Hulaila Industrial Zone – Free Zone"],
+  "Fujairah":["Fujairah Free Zone","FOIZ (Fujairah Oil Industry Zone)"]
+};
+
+const QA_LIST=[
+  {k:"manufacturing",t:"Manufacturing of goods or materials",tip:"The production, improvement or assembly of products and materials from raw materials or components.",c:"Art. 2(1)(a) & 2(3)(a), MD 229/2025"},
+  {k:"processing",t:"Processing of goods or materials",tip:"The preparation, treatment, transformation or conversion of goods or materials into another form of good or material for commercial or industrial use or sale.",c:"Art. 2(1)(b) & 2(3)(b), MD 229/2025"},
+  {k:"commodities",t:"Trading of Qualifying Commodities",tip:"Physical trading of Qualifying Commodities (metals, minerals, industrial chemicals, energy, agricultural commodities and associated by-products, and environmental commodities) for which a Quoted Price exists on a recognised exchange or price reporting agency, plus associated hedging derivatives and structured commodity financing. Does not qualify if distribution/warehousing/logistics/inventory revenue is 51% or more of total revenue.",c:"Art. 2(1)(c) & 2(3)(c), MD 229/2025"},
+  {k:"holding",t:"Holding of shares & securities for investment",tip:"Holding shares, equitable interests or financial instruments for investment purposes, held for an uninterrupted period of at least 12 months. Excludes instruments issued via securitisation of receivables from a non-financial asset.",c:"Art. 2(1)(d) & 2(3)(d), MD 229/2025"},
+  {k:"ships",t:"Ownership, management & operation of Ships",tip:"Ships used in international transportation of passengers, goods or livestock, towing, assistance at sea, dredging, and bareboat leasing/chartering for international transport. Excludes ships for local transport, leisure, or floating hotels/restaurants/casinos.",c:"Art. 2(1)(e) & 2(3)(e), MD 229/2025"},
+  {k:"reinsurance",t:"Reinsurance services",tip:"Reinsurance operations regulated under Federal Decree-Law No. 48 of 2023 on the Regulation of Insurance Activities.",c:"Art. 2(1)(f) & 2(3)(f), MD 229/2025"},
+  {k:"fundmgmt",t:"Fund management services",tip:"Portfolio management, risk management and discretionary/non-discretionary fund management of an investment fund, subject to the regulatory oversight of the Competent Authority in the State.",c:"Art. 2(1)(g) & 2(3)(g), MD 229/2025"},
+  {k:"wealth",t:"Wealth & investment management services",tip:"Discretionary and non-discretionary investment management, advisory, portfolio management and wealth advisory services, subject to the regulatory oversight of the Competent Authority in the State.",c:"Art. 2(1)(h) & 2(3)(h), MD 229/2025"},
+  {k:"hq",t:"Headquarter services to Related Parties",tip:"Administering, overseeing and managing the business of Related Parties — senior/general management, captive insurance, administrative and procurement services, business planning, risk management and group coordination.",c:"Art. 2(1)(i) & 2(3)(i), MD 229/2025"},
+  {k:"treasury",t:"Treasury & financing services to Related Parties or own account",tip:"Cash and liquidity management, financing, debt management, financial risk management and related advisory, including centralised payment and collection — for Related Parties or the entity's own account.",c:"Art. 2(1)(j) & 2(3)(j), MD 229/2025"},
+  {k:"aircraft",t:"Financing & leasing of Aircraft",tip:"Financing, leasing and securitisation of aircraft, aircraft engines or rotable components, and related advisory/agency services.",c:"Art. 2(1)(k) & 2(3)(k), MD 229/2025"},
+  {k:"distribution",t:"Distribution of goods in or from a Designated Zone",tip:"Buying and selling of goods conducted in or from a Designated Zone, where goods entering the UAE are imported through the Designated Zone and supplied to a customer that resells/processes/alters them for sale or resale, or to a public benefit entity. Requires the free zone to be a Designated Zone (verified next).",c:"Art. 2(1)(l) & 2(3)(l), MD 229/2025"},
+  {k:"logistics",t:"Logistics services",tip:"Storage and transportation of goods on behalf of another person without taking title — cargo handling, warehousing, container storage, transport agency, customs brokerage, order/inventory management, freight forwarding and brokerage.",c:"Art. 2(1)(m) & 2(3)(m), MD 229/2025"},
+  {k:"ancillary",t:"Activities ancillary to any of the above",tip:"An activity necessary for the performance of a main Qualifying Activity, or which makes a minor contribution to it and is so closely related that it should not be regarded as a separate activity.",c:"Art. 2(1)(n) & 2(4), MD 229/2025"},
+  {k:"ip",t:"Exploitation of Qualifying Intellectual Property",tip:"Income from patents, copyrighted software and functionally equivalent legally protected rights (not marketing IP like trademarks). Qualifying Income is limited by the nexus/uplift formula in Art. 4 MD 229/2025.",c:"Art. 3(1)(c) & Art. 7, CD 100/2023; Art. 4, MD 229/2025"},
+  {k:"none",t:"None of these — e.g. retail, banking, non-carve-out finance/leasing, or immovable property",tip:"Activities outside the Qualifying Activity list — including any Excluded Activity — do not generate Qualifying Income when transacted with a Non-Free Zone Person.",c:CITE.excl}
+];
+
+/* ---------------- Lead capture (Google Sheets) ---------------- */
+const LEAD_CAPTURE_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbyEfpaq6MPdKVBpSlbHXDHK7TwgdSODyzGi5g0Y7LCcVSzhZqMOZ8kZq-Sv9e2_kmUW/exec';
+const LEAD_STORAGE_KEY = 'nkr_qfzp_freezone_tool_lead_v1';
+
+function getSavedLead(){
+  try { return JSON.parse(localStorage.getItem(LEAD_STORAGE_KEY) || 'null'); }
+  catch(e){ return null; }
+}
+function saveLead(lead){ localStorage.setItem(LEAD_STORAGE_KEY, JSON.stringify(lead)); }
+function validEmail(email){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email); }
+function submitLeadCapture(payload){
+  if(!LEAD_CAPTURE_WEBHOOK_URL || LEAD_CAPTURE_WEBHOOK_URL.indexOf('PASTE_') === 0) return;
+  try{
+    fetch(LEAD_CAPTURE_WEBHOOK_URL, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify(payload)
+    }).catch(function(){});
+  } catch(e){}
+}
+function requireLeadCapture(onDone){
+  const existing = getSavedLead();
+  if(existing && existing.email){ onDone(existing); return; }
+  const modal = document.getElementById('leadModal');
+  const err = document.getElementById('leadError');
+  modal.classList.add('show');
+  document.getElementById('leadSubmitBtn').onclick = function(){
+    const lead = {
+      tool: 'QFZP Free Zone 0% Eligibility Tool',
+      name: document.getElementById('leadName').value.trim(),
+      email: document.getElementById('leadEmail').value.trim(),
+      company: document.getElementById('leadCompany').value.trim(),
+      toolVersion: 'QFZP-FreeZone v1',
+      pageUrl: (typeof location !== 'undefined' ? location.href : ''),
+      timestamp: new Date().toISOString()
+    };
+    if(!lead.name || !lead.company || !validEmail(lead.email)){ err.style.display='block'; return; }
+    saveLead(lead);
+    submitLeadCapture(lead);
+    modal.classList.remove('show');
+    onDone(lead);
+  };
+}
+
+let trail=[],stepStack=[],answers={},trailMarks=[],answersMarks=[];
+const STAGE=document.getElementById('stage'),PROG=document.getElementById('progress');
+/* Names for the fixed first five gates; later steps are branch-dependent
+   and shown generically so the count is always accurate. */
+const CORE_LABELS=["Free Zone Person","Substance","Not elected out","Arm's length & TP","Audited FS"];
+
+function tip(text,cite){return `<span class="info" tabindex="0">i<span class="tip">${text}${cite?`<cite>${cite}</cite>`:''}</span></span>`;}
+
+/* Step label — a simple running number that always matches the actual
+   position in the flow, with a short descriptive name. */
+function stepLabel(name){
+  const d=stepStack.length;
+  const nm = name || (d<=CORE_LABELS.length ? CORE_LABELS[d-1] : '');
+  return `Step ${d}${nm?` · ${nm}`:''}`;
+}
+
+/* Progress reflects actual depth. The first five gates are labelled; once
+   past them we show a single "current step" marker so the number can never
+   contradict the step heading, regardless of which branch is taken.
+   state: 'active' = current pip, 'done' = a completed pip, 'fail' = failed pip,
+   'final' = a result screen. */
+function renderProgress(state){
+  PROG.innerHTML='';
+  const depth=stepStack.length; // 1-based current step
+  const total=CORE_LABELS.length;
+  // render the five core gates
+  for(let i=0;i<total;i++){
+    const pip=document.createElement('div');let cls='pip';
+    const stepNo=i+1;
+    if(state==='fail' && depth===stepNo) cls+=' fail';
+    else if(state==='final') cls+=' done';
+    else if(stepNo<depth) cls+=' done';
+    else if(stepNo===depth) cls+=' active';
+    pip.className=cls;
+    const mark=(cls.includes('done'))?'✓':stepNo;
+    pip.innerHTML=`<span class="dot">${mark}</span><span class="lbl-txt">${CORE_LABELS[i]}</span>`;
+    PROG.appendChild(pip);
+    const s=document.createElement('span');s.className='sep';PROG.appendChild(s);
+  }
+  // one grouped pip for the income-classification stage(s)
+  const incomePip=document.createElement('div');let icls='pip';
+  if(state==='final') icls+=' done';
+  else if(state==='fail' && depth>total) icls+=' fail';
+  else if(depth>total) icls+=' active';
+  incomePip.className=icls;
+  incomePip.innerHTML=`<span class="dot">${icls.includes('done')?'✓':'6'}</span><span class="lbl-txt">Income &amp; de minimis</span>`;
+  PROG.appendChild(incomePip);
+  const sep=document.createElement('span');sep.className='sep';PROG.appendChild(sep);
+  // result pip
+  const resPip=document.createElement('div');let rcls='pip';
+  if(state==='final') rcls+=' done';
+  else if(state==='fail') rcls+=' fail';
+  resPip.className=rcls;
+  resPip.innerHTML=`<span class="dot">${state==='final'?'✓':(state==='fail'?'!':'7')}</span><span class="lbl-txt">Result</span>`;
+  PROG.appendChild(resPip);
+}
+
+function push(fn){stepStack.push(fn);fn();}
+function goBack(){
+  if(stepStack.length<=1)return;
+  stepStack.pop();
+  const prev=stepStack[stepStack.length-1];
+  trail=trail.slice(0,trailMarks[stepStack.length-1]??0);
+  answers=JSON.parse(JSON.stringify(answersMarks[stepStack.length-1]??{}));
+  prev();
+}
+/* progressState: 'step' (a question), 'fail', or 'final' (pass/review) */
+function mount(node,progressState){
+  const idx=stepStack.length-1;
+  if(trailMarks[idx]===undefined)trailMarks[idx]=trail.length;
+  if(answersMarks[idx]===undefined)answersMarks[idx]=JSON.parse(JSON.stringify(answers));
+  STAGE.innerHTML='';renderProgress(progressState||'step');STAGE.appendChild(node);
+  if(stepStack.length>1&&progressState!=='fail'&&progressState!=='final'){
+    const b=document.createElement('button');b.className='back';b.textContent='‹ Back to previous step';b.onclick=goBack;STAGE.appendChild(b);
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function record(q,a,cls){trail.push({q,a,cls:cls||''});}
+
+function optionCard(stepNum,question,note,opts,stepName){
+  const div=document.createElement('div');div.className='card';
+  div.innerHTML=`<div class="step-num">${stepLabel(stepName)}</div><div class="q">${question}</div>${note?`<div class="q-note">${note}</div>`:''}<div class="options"></div>`;
+  const box=div.querySelector('.options');
+  opts.forEach((o,idx)=>{
+    const b=document.createElement('button');b.className='opt';
+    b.innerHTML=`<span class="key">${o.key||String.fromCharCode(65+idx)}</span><span class="lbl">${o.label}${o.tipHTML||''}${o.sub?`<small>${o.sub}</small>`:''}</span>`;
+    b.onclick=o.action;box.appendChild(b);
+  });
+  return div;
+}
+function fixTooltips(){
+  document.querySelectorAll('.info').forEach(el=>{
+    const r=el.getBoundingClientRect();
+    if(r.left>window.innerWidth*0.62)el.classList.add('tip-left');
+  });
+}
+function closeAllTips(except){
+  document.querySelectorAll('.info.open').forEach(el=>{ if(el!==except) el.classList.remove('open'); });
+}
+/* Tap handling (capture phase) so an "i" tap never advances the step.
+   - Tapping an info icon toggles its tooltip and stops the tap here.
+   - Tapping anywhere else closes any open tooltip. */
+document.addEventListener('click',function(e){
+  const info=e.target.closest('.info');
+  if(info){
+    e.preventDefault();
+    e.stopPropagation();
+    const wasOpen=info.classList.contains('open');
+    closeAllTips(info);
+    if(wasOpen){ info.classList.remove('open'); }
+    else { info.classList.add('open'); }
+    return;
+  }
+  // tap outside any info → close all
+  closeAllTips(null);
+},true);
+
+const CTA_HTML=`<div class="cta">Need a deeper, situation-specific analysis? Put your scenario to our AI Tax Opinion tool for a reasoned view on your UAE Corporate Tax position — <a href="https://www.ct.nkr.ae" target="_blank" rel="noopener">ct.nkr.ae</a>.</div>`;
+
+function factsBlock(facts){
+  const d=document.createElement('div');d.className='card facts';d.innerHTML=`<h3>Why — the governing law</h3>`;
+  facts.forEach(f=>{const el=document.createElement('div');el.className='fact';el.innerHTML=`<div class="ft">${f.t}</div><div class="fb">${f.b}</div>${f.c?`<cite>${f.c}</cite>`:''}`;d.appendChild(el);});
+  const disc=document.createElement('div');disc.className='disclaimer';
+  disc.innerHTML=`<strong>Scope of this assessment.</strong> This tool tests the statutory eligibility gates in sequence. It does not compute your actual tax, verify substance/CIGA sufficiency in fact, confirm regulatory licensing for regulated activities, price intra-group transactions, or assess a Domestic/Foreign Permanent Establishment (${CITE.pe}) or immovable-property income (${CITE.immovable}) — each of which is separately taxable at 9% even for a QFZP. Verify the final position against the primary legislation.`;
+  d.appendChild(disc);return d;
+}
+function pathBlock(){
+  const d=document.createElement('div');d.className='card path';d.innerHTML=`<h3>Your answers</h3>`;
+  trail.forEach(t=>{const r=document.createElement('div');r.className='path-row';r.innerHTML=`<span class="pq">${t.q}</span><span class="pa ${t.cls}">${t.a}</span>`;d.appendChild(r);});
+  return d;
+}
+function restartRow(){
+  const wrap=document.createElement('div');wrap.style.cssText='display:flex;gap:10px;flex-wrap:wrap;margin-top:4px';
+  const r=document.createElement('button');r.className='btn';r.textContent='Start a new assessment';r.onclick=start;
+  const p=document.createElement('button');p.className='btn ghost';p.textContent='Print / save as PDF';p.onclick=()=>{requireLeadCapture(function(){window.print();});};
+  wrap.appendChild(r);wrap.appendChild(p);return wrap;
+}
+function result(kind,tag,title,rateLine,facts,extraNote){
+  const node=document.createElement('div');const v=document.createElement('div');v.className='verdict '+kind;
+  v.innerHTML=`<div class="tag">${tag}</div><h2>${title}</h2><div class="rate-line">${rateLine}</div>${extraNote?`<p>${extraNote}</p>`:''}${CTA_HTML}`;
+  node.appendChild(v);node.appendChild(factsBlock(facts));node.appendChild(pathBlock());node.appendChild(restartRow());
+  mount(node,kind==='fail'?'fail':'final');fixTooltips();
+}
+function fail(s,t,r,f){result('fail','Does not qualify',t,r,f);}
+function pass(t,r,f){result('pass','Meets the tested conditions',t,r,f,"All cumulative conditions tested by this tool are met on the facts you entered. QFZP status must be satisfied in <em>every</em> tax period — a breach in any period removes the 0% benefit for that period and the following four.");}
+function review(t,r,f){result('review','Qualifies with taxable carve-out',t,r,f);}
+
+/* ===== STEPS ===== */
+function step1(){
+  const node=optionCard(1,
+    `Is the entity a juridical person incorporated, established, or otherwise registered in a UAE Free Zone? ${tip("A QFZP must be a Free Zone Person — a juridical person incorporated, established or otherwise registered in a Free Zone, including a branch registered in a Free Zone. A natural person cannot be a QFZP.",CITE.fzp)}`,
+    `The regime applies only to a <strong>Free Zone Person</strong>. A branch of a Free Zone Person registered in the same Free Zone is treated as part of that person.`,
+    [
+      {key:'A',label:'Yes — a juridical person registered in a UAE Free Zone',action:()=>{record("Registered juridical person in a UAE Free Zone?","Yes","yes");push(step2);}},
+      {key:'B',label:'No',sub:"Natural person, unincorporated, or not in a Free Zone",action:()=>{record("Registered juridical person in a UAE Free Zone?","No","no");
+        fail(0,"Not a Free Zone Person — the regime does not apply.","Corporate Tax applies under the standard rules: <b>0% on Taxable Income up to AED 375,000 and 9% above</b> (subject to Small Business Relief or other reliefs if applicable). The 0% QFZP rate is unavailable.",
+        [{t:"Only a Free Zone Person can be a QFZP.",b:"A QFZP is defined as a Free Zone Person that meets all the Article 18 conditions. If the entity is not a juridical person registered in a Free Zone, the first gate fails and no further QFZP condition can be reached.",c:CITE.fzp}]);}}
+    ]);
+  mount(node,'step');fixTooltips();
+}
+function step2(){
+  const node=optionCard(2,
+    `Does the entity maintain adequate substance in the Free Zone — performing its core income-generating activities (CIGA) there? ${tip("The QFZP must undertake its CIGA in the Free Zone/Designated Zone and, having regard to the level of activity, have adequate assets, an adequate number of qualified full-time employees, and adequate operating expenditure for each activity. CIGA are the significant functions that drive business value, not merely support functions. CIGA may be outsourced only to another person in the Free Zone/Designated Zone (wider only for Qualifying IP) with adequate supervision.",CITE.substance)}`,
+    `Substance must be in the Free Zone / Designated Zone where the activity is required to be carried out.`,
+    [
+      {key:'A',label:'Yes — CIGA, assets, staff and expenditure are in the Free Zone',action:()=>{record("Adequate substance / CIGA in the Free Zone?","Yes","yes");push(step3);}},
+      {key:'B',label:'No, or not sure the substance is adequate',action:()=>{record("Adequate substance / CIGA in the Free Zone?","No","no");
+        fail(1,"Adequate-substance condition not met.","Without adequate substance the entity is <b>not a QFZP</b>. Its income is taxable under the standard rules (0% / 9%), and the multi-period consequence below applies.",
+        [{t:"Substance is a standalone Article 18 condition.",b:"A QFZP must undertake its CIGA in the Free Zone/Designated Zone and, having regard to the level of activity, have adequate assets, qualified full-time employees, and operating expenditure for each activity. Outsourcing is permitted only within the Free Zone/Designated Zone (wider only for Qualifying IP) with adequate supervision.",c:CITE.substance},
+         {t:"Consequence of failing any condition.",b:"A person that fails any QFZP condition at any time in a tax period ceases to be a QFZP from the start of that tax period and for the subsequent four tax periods.",c:CITE.breach}]);}}
+    ]);
+  mount(node,'step');fixTooltips();
+}
+function step3(){
+  const node=optionCard(3,
+    `Has the entity elected to be subject to the standard Corporate Tax rules (elected out of the 0% Free Zone regime)? ${tip("A Free Zone Person may elect under Article 19 to be subject to Corporate Tax at the standard rates. A cumulative Article 18 condition is that the person has NOT made that election.",CITE.election)}`,
+    `A Free Zone Person may elect, under Article 19, to be taxed under the ordinary rules. Making that election disqualifies it from QFZP treatment.`,
+    [
+      {key:'A',label:'No — it has not elected out',action:()=>{record("Elected out to standard CT rules (Art. 19)?","No","yes");push(step4);}},
+      {key:'B',label:'Yes — it elected to be a standard taxpayer',action:()=>{record("Elected out to standard CT rules (Art. 19)?","Yes","no");
+        fail(2,"The entity elected out of the Free Zone regime.","By electing under Article 19 the entity is taxed under the standard rules: <b>0% up to AED 375,000, 9% above</b>. The QFZP 0% rate does not apply for the periods covered by the election.",
+        [{t:"Election is disqualifying by design.",b:"A cumulative Article 18 condition is that the Free Zone Person has not elected to be subject to Corporate Tax under Article 19. An entity that has elected out cannot simultaneously claim QFZP status.",c:CITE.election}]);}}
+    ]);
+  mount(node,'step');fixTooltips();
+}
+function step4(){
+  const node=optionCard(4,
+    `Does the entity comply with the arm's length principle and maintain the required transfer pricing documentation? ${tip("A QFZP must comply with the arm's length principle under Article 34 for transactions with Related Parties and Connected Persons, and maintain transfer pricing documentation (master file and local file where the Article 55 thresholds are met), with supporting records.",CITE.alp)}`,
+    `This covers Article 34 (arm's length pricing) and Article 55 (transfer pricing documentation). Under Ministerial Decision No. 97 of 2023, a master file and local file are required only where the Taxable Person is part of an MNE Group with consolidated group Revenue of AED 3,150,000,000 or more, or where the Taxable Person's own Revenue is AED 200,000,000 or more in the Tax Period. Below both thresholds, this condition is treated as met by default.`,
+    [
+      {key:'A',label:"Yes — arm's length applied and TP documentation maintained / below threshold applicable for TP documentation",action:()=>{record("Arm's length + TP documentation?","Yes","yes");push(step5);}},
+      {key:'B',label:'No, or not maintained',action:()=>{record("Arm's length + TP documentation?","No","no");
+        fail(3,"Arm's length / transfer pricing condition not met.","Failure of this condition removes QFZP status; income is taxed under the standard rules and the multi-period lockout applies.",
+        [{t:"Arm's length compliance is a QFZP condition.",b:"A QFZP must comply with the arm's length principle under Article 34 and maintain transfer pricing documentation under Article 55. Non-compliance is a breach of the Article 18 conditions.",c:CITE.alp}]);}}
+    ]);
+  mount(node,'step');fixTooltips();
+}
+function step5(){
+  const node=optionCard(5,
+    `Does the entity prepare and maintain audited financial statements? ${tip("Under Article 5 of MD 229/2025, read with MD 84/2025, a QFZP must prepare audited financial statements. This applies to ALL QFZPs regardless of revenue, for tax periods commencing on or after 1 June 2023.",CITE.audit)}`,
+    `A QFZP must prepare audited financial statements — regardless of revenue — for tax periods commencing on or after 1 June 2023.`,
+    [
+      {key:'A',label:'Yes — audited financial statements are prepared',action:()=>{record("Audited financial statements prepared?","Yes","yes");push(step6);}},
+      {key:'B',label:'No',action:()=>{record("Audited financial statements prepared?","No","no");
+        fail(4,"Audited financial statements condition not met.","Without audited financial statements the entity is <b>not a QFZP</b> and is taxed under the standard rules, with the multi-period lockout applying.",
+        [{t:"Audited financial statements are mandatory for QFZP status.",b:"In addition to the Article 18 conditions, a QFZP must prepare audited financial statements in accordance with MD 84/2025. This is a distinct, non-waivable condition and applies irrespective of the entity's revenue.",c:CITE.audit}]);}}
+    ]);
+  mount(node,'step');fixTooltips();
+}
+
+/* STEP 6 — counterparty first */
+function step6(){
+  const node=optionCard(6,
+    `For the income you want to treat as Qualifying Income, who is the counterparty? ${tip("Qualifying Income is defined by counterparty first. Income from a Free Zone Person that is the Beneficial Recipient qualifies UNLESS it is an Excluded Activity — the activity need not be on the Qualifying Activity list. Income from a Non-Free Zone Person qualifies ONLY if it is a Qualifying Activity that is not an Excluded Activity. Qualifying IP income and 'any other income' within de minimis are separate categories.",CITE.qiFramework)}`,
+    `This is the primary test — the rules differ by whether your customer is a Free Zone Person that genuinely uses what it buys, or someone else. Pick the counterparty for this stream of income.`,
+    [
+      {key:'A',label:'A Free Zone Person who is the Beneficial Recipient of the goods/services',
+        tipHTML:tip("A Free Zone Person is the Beneficial Recipient where it has the right to use and enjoy the service or good and has no contractual or legal obligation to pass it on. Income here qualifies unless it is an Excluded Activity.",CITE.beneficial),
+        action:()=>{answers.cp='fz';record("Counterparty for this income","Free Zone Person (Beneficial Recipient)","yes");push(step6_fz);}},
+      {key:'B',label:'A Non-Free Zone Person, or a Free Zone counterparty that is only a conduit',
+        sub:"i.e. a mainland/foreign business or consumer, or a Free Zone Person contractually obliged to on-supply what it receives",
+        tipHTML:tip("Two situations are grouped here because neither qualifies automatically. (1) A Non-Free Zone Person (mainland UAE, foreign business or natural person) — income qualifies only if it arises from a Qualifying Activity that is not an Excluded Activity. (2) A Free Zone conduit that is not the Beneficial Recipient — this income is non-qualifying. The next question separates the two.",CITE.qi_nonfz),
+        action:()=>{record("Counterparty for this income","Non-Free Zone Person, or Free Zone conduit","");push(step6_b);}}
+    ],'Counterparty');
+  mount(node,'step');fixTooltips();
+}
+
+/* STEP 6-B — separate a genuine Non-Free Zone customer from a Free Zone conduit */
+function step6_b(){
+  const node=optionCard(6,
+    `Which of these describes the counterparty? ${tip("A Non-Free Zone Person's income can still qualify if it comes from a Qualifying Activity. A Free Zone conduit that is not the Beneficial Recipient produces non-qualifying income regardless of the activity.",CITE.beneficial)}`,
+    `These two follow different rules, so confirm which applies.`,
+    [
+      {key:'A',label:'A Non-Free Zone Person (mainland UAE, foreign business, or consumer)',
+        tipHTML:tip("Any person who is not a Free Zone Person. Income qualifies only where it arises from a Qualifying Activity that is not an Excluded Activity.",CITE.qi_nonfz),
+        action:()=>{answers.cp='nonfz';record("Counterparty detail","Non-Free Zone Person","");push(step6_nonfz);}},
+      {key:'B',label:'A Free Zone counterparty that is only a conduit (not the Beneficial Recipient)',
+        sub:"e.g. contractually obliged to on-supply the goods/services to someone else",
+        tipHTML:tip("Where the Free Zone counterparty must pass the good or service on to another person, it is not the Beneficial Recipient, so the income is non-qualifying revenue for the de minimis test.",CITE.beneficial),
+        action:()=>{answers.cp='conduit';record("Counterparty detail","Free Zone conduit — not Beneficial Recipient","no");push(()=>step8('conduit'));}}
+    ],'Counterparty');
+  mount(node,'step');fixTooltips();
+}
+function step6_fz(){
+  const node=optionCard(6,
+    `Is this income from an <em>Excluded Activity</em>? ${tip("Even where the customer is a Free Zone Person, income from an Excluded Activity is NOT Qualifying Income. Excluded Activities: transactions with natural persons (except ships / fund management / wealth management / aircraft carve-outs); banking; insurance (except reinsurance and HQ carve-outs); finance and leasing (except commodity / ship / treasury / aircraft carve-outs); ownership or exploitation of immovable property other than Commercial Property in a Free Zone transacted with a Free Zone Person; and activities ancillary to these.",CITE.excl)}`,
+    `Income from a Free Zone Person (as Beneficial Recipient) is Qualifying Income <strong>unless</strong> it falls within an Excluded Activity.`,
+    [
+      {key:'A',label:'No — it is not an Excluded Activity',action:()=>{record("Is it an Excluded Activity?","No","yes");push(()=>step8('fz_ok'));}},
+      {key:'B',label:'Yes — it is an Excluded Activity',
+        tipHTML:tip("Banking, insurance (non-reinsurance), non-carve-out finance/leasing, transactions with natural persons outside the carve-outs, or ownership/exploitation of non-qualifying immovable property.",CITE.excl),
+        action:()=>{record("Is it an Excluded Activity?","Yes — Excluded Activity","no");push(()=>step8('excluded'));}}
+    ],'Excluded-activity check');
+  mount(node,'step');fixTooltips();
+}
+function step6_nonfz(){
+  const node=optionCard(6,
+    `Which Qualifying Activity does this income arise from? ${tip("For a Non-Free Zone counterparty, income qualifies only if it comes from a Qualifying Activity in Article 2(1) of MD 229/2025 and is not an Excluded Activity. Select the closest match; each option explains its statutory meaning. If none apply, the income is non-qualifying.",CITE.qa)}`,
+    `Choose the activity that generates this income. Hover each <span style="font-style:italic">i</span> for the statutory definition.`,
+    QA_LIST.map(q=>({key:undefined,label:q.t,tipHTML:q.tip?tip(q.tip,q.c):'',action:()=>{
+      answers.qa=q.k;
+      if(q.k==='none'){
+        record("Qualifying Activity (Non-Free Zone counterparty)","None of the listed activities","no");
+        fail(6,"Income is not from a Qualifying Activity.","Income from a Non-Free Zone Person that is not a Qualifying Activity (or is an Excluded Activity) is <b>non-qualifying</b> and taxable at <b>9%</b>. If such non-qualifying revenue exceeds the de minimis limit, QFZP status is lost entirely.",
+        [{t:"Non-Free Zone income must be a Qualifying Activity.",b:"Income derived from transactions with a Non-Free Zone Person is Qualifying Income only in respect of Qualifying Activities that are not Excluded Activities. Activities outside that list — retail sales to consumers, banking, non-carve-out finance/leasing, ownership of non-qualifying immovable property — produce non-qualifying income.",c:CITE.qi_nonfz},
+         {t:"Excluded Activities never qualify.",b:"Excluded Activities include transactions with natural persons (subject to narrow carve-outs), banking, insurance (except reinsurance/HQ carve-outs), non-carve-out finance and leasing, and ownership/exploitation of immovable property other than Commercial Property in a Free Zone dealt with between Free Zone Persons.",c:CITE.excl}]);
+} else {
+          record("Qualifying Activity (Non-Free Zone counterparty)",q.t,"yes");
+          const carveOut=['ships','fundmgmt','wealth','aircraft'];
+          if(carveOut.includes(q.k)){
+            record("Includes transactions with natural persons?","Not applicable — permitted carve-out activity","yes");
+            push(()=>(q.k==='distribution'||q.k==='logistics')?step7b(q,false):step8('nonfz_ok',q));
+          } else {
+            push(()=>step7(q));
+          }
+        }
+    }})),'Qualifying activity');
+  mount(node,'step');fixTooltips();
+}
+function step7(qa){
+  const naturalOK=false;
+  const needsDZ=(qa.k==='distribution'||qa.k==='logistics');
+  const node=optionCard(7,
+    `Does this income include transactions with natural persons (individual consumers)? ${tip("A transaction with a natural person is an Excluded Activity, EXCEPT where it relates to: ownership/operation of Ships (e), Fund management (g), Wealth & investment management (h), or Aircraft financing & leasing (k). For all other activities, natural-person income is excluded and counts toward the de minimis limit.",CITE.natural)}`,
+    `Transactions with natural persons are generally an Excluded Activity, with only four carve-outs.`,
+    [
+      {key:'A',label:'No — business counterparties only',action:()=>{record("Includes transactions with natural persons?","No","yes");push(()=>needsDZ?step7b(qa,false):step8('nonfz_ok',qa));}},
+      {key:'B',label:'Yes — includes individual consumers',
+        sub:naturalOK?"For this activity, natural-person transactions are a permitted carve-out.":"For this activity, natural-person transactions are an Excluded Activity.",
+        action:()=>{
+          if(naturalOK){record("Includes transactions with natural persons?","Yes — permitted carve-out","yes");push(()=>needsDZ?step7b(qa,false):step8('nonfz_ok',qa));}
+          else{record("Includes transactions with natural persons?","Yes — Excluded Activity","no");push(()=>needsDZ?step7b(qa,true):step8('nonfz_ok',qa,true));}
+        }}
+    ],'Customer type');
+  mount(node,'step');fixTooltips();
+}
+function step7b(qa,hadNaturalExcl){
+  const node=document.createElement('div');node.className='card';
+  const dzReasonHTML=qa.k==='distribution'
+    ?`Distribution qualifies only where the buying and selling is conducted <strong>in or from a Designated Zone</strong>, goods entering the UAE are imported through that Designated Zone, and are supplied to a customer who resells/processes/alters them, or to a public benefit entity.`
+    :`Logistics services are storage and transportation on behalf of another person without taking title. Confirm your free zone status below so the location-based tests are applied correctly.`;
+  node.innerHTML=`<div class="step-num">${stepLabel('Designated Zone check')}</div>
+    <div class="q">Is your free zone one of the UAE Designated Zones? ${tip("A Designated Zone is a zone listed under Cabinet Decision No. 59 of 2017 (for VAT) that has also been included as a Free Zone for Corporate Tax. Distribution must be conducted in or from a Designated Zone to qualify. Use the search box to verify your zone against the official list.",CITE.designated)}</div>
+    <div class="q-note">${dzReasonHTML}</div>
+    <input class="dz-search" id="dzSearch" placeholder="Search the official Designated Zones list (e.g. Jebel Ali, DAFZA, Hamriyah)…" autocomplete="off">
+    <div class="dz-groups" id="dzGroups"></div>
+    <div class="options" style="margin-top:16px">
+      <button class="opt" id="dzYes"><span class="key">A</span><span class="lbl">Yes — my free zone is on the Designated Zones list above</span></button>
+      <button class="opt" id="dzNo"><span class="key">B</span><span class="lbl">No — my free zone is not a Designated Zone<small>${qa.k==='distribution'?'Distribution income cannot qualify from a non-Designated Zone.':'Confirm the location tests with an adviser.'}</small></span></button>
+    </div>`;
+  mount(node,'step');
+  const groups=node.querySelector('#dzGroups');
+  function renderDZ(filter){
+    groups.innerHTML='';const f=(filter||'').trim().toLowerCase();let any=false;
+    Object.keys(DESIGNATED_ZONES).forEach(em=>{
+      const matches=DESIGNATED_ZONES[em].filter(z=>!f||z.toLowerCase().includes(f)||em.toLowerCase().includes(f));
+      if(matches.length){any=true;const h=document.createElement('div');h.className='dz-emirate';h.textContent=em;groups.appendChild(h);
+        matches.forEach(z=>{const it=document.createElement('div');it.className='dz-item'+(f&&z.toLowerCase().includes(f)?' hit':'');it.textContent=z;groups.appendChild(it);});}
+    });
+    if(!any){const e=document.createElement('div');e.className='dz-empty';e.textContent='No Designated Zone matches that search. If your zone is not listed, it is not a Designated Zone.';groups.appendChild(e);}
+  }
+  renderDZ('');
+  node.querySelector('#dzSearch').addEventListener('input',e=>renderDZ(e.target.value));
+  node.querySelector('#dzYes').onclick=()=>{record("Free zone is a Designated Zone?","Yes","yes");push(()=>step8('nonfz_ok',qa,hadNaturalExcl));};
+  node.querySelector('#dzNo').onclick=()=>{
+    record("Free zone is a Designated Zone?","No","no");
+    if(qa.k==='distribution'){
+      fail(6,"Distribution outside a Designated Zone does not qualify.","Distribution of goods is a Qualifying Activity only when conducted in or from a Designated Zone. Income from distribution outside a Designated Zone is <b>non-qualifying</b> and taxable at <b>9%</b>; if it exceeds the de minimis limit, QFZP status is lost entirely.",
+      [{t:"Distribution is location-restricted.",b:"The buying and selling must be conducted in or from a Designated Zone, goods entering the UAE must be imported through that Designated Zone, and be supplied to a customer who resells/processes/alters them or to a public benefit entity. A non-Designated Zone fails this test.",c:CITE.designated}]);
+    } else { push(()=>step8('nonfz_ok',qa,hadNaturalExcl)); }
+  };
+  fixTooltips();
+}
+function step8(mode,qa,hadNaturalExcl){
+  const node=document.createElement('div');node.className='card';
+  let contextNote='';
+  if(mode==='conduit')contextNote=`<div class="q-note">You indicated the Free Zone counterparty is <strong>not the Beneficial Recipient</strong>. That income is <strong>non-qualifying</strong> and must be entered below as non-qualifying revenue. (${CITE.beneficial})</div>`;
+  else if(mode==='excluded')contextNote=`<div class="q-note">You indicated the income is from an <strong>Excluded Activity</strong>. That income is <strong>non-qualifying</strong> and must be entered below as non-qualifying revenue. (${CITE.excl})</div>`;
+  if(qa&&qa.k==='commodities')contextNote+=`<div class="q-note"><strong>Commodities check:</strong> the activity does not qualify if revenue from distribution/warehousing/logistics/inventory functions is 51% or more of total revenue. If that applies, treat the commodity income as non-qualifying below. (Art. 2(3)(c), MD 229/2025)</div>`;
+  node.innerHTML=`<div class="step-num">${stepLabel('De minimis test')}</div>
+    <div class="q">Enter revenue for the tax period to test the de minimis limit. ${tip("The de minimis limit is the LOWER of 5% of total revenue or AED 5,000,000. If non-qualifying revenue exceeds this limit, the entity loses QFZP status for the period and the next four. Staying within the limit preserves QFZP status, but the non-qualifying income is still taxed at 9%.",CITE.deminimis)}</div>
+    ${contextNote}
+    <div class="q-note"><strong>What counts as non-qualifying revenue?</strong> ${tip("Per Art. 4(2)(a) CD 100/2023, non-qualifying revenue is revenue from: (1) Excluded Activities; (2) activities that are not Qualifying Activities where the counterparty is a Non-Free Zone Person; and (3) transactions with a Free Zone Person that is NOT the Beneficial Recipient. It EXCLUDES (Art. 4(3)): revenue from immovable property in a Free Zone, revenue attributable to a Permanent Establishment, and IP revenue other than qualifying IP income — these are dealt with separately.","Art. 4(2)-(3), CD 100/2023")} Include: income from Excluded Activities (banking, insurance except reinsurance, non-carve-out finance/leasing, transactions with natural persons outside the carve-outs); income from non-qualifying activities with Non-Free Zone Persons; and income from Free Zone counterparties that are mere conduits. Enter <code>0</code> if you have none.</div>
+    <div class="num-row">
+      <div class="field"><label for="totalRev">Total revenue (AED)</label><input id="totalRev" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 10000000"></div>
+      <div class="field"><label for="nqRev">Non-qualifying revenue (AED)</label><input id="nqRev" type="number" min="0" step="1" inputmode="numeric" placeholder="e.g. 200000"></div>
+      <button class="btn" id="calcBtn">Evaluate</button>
+    </div>
+    <div id="numErr" class="hide" style="color:var(--red);font-family:'Helvetica Neue',Arial,sans-serif;font-size:13px;margin-top:10px"></div>`;
+  mount(node,'step');fixTooltips();
+  node.querySelector('#calcBtn').onclick=()=>{
+    const total=parseFloat(node.querySelector('#totalRev').value),nq=parseFloat(node.querySelector('#nqRev').value),err=node.querySelector('#numErr');
+    if(isNaN(total)||total<0||isNaN(nq)||nq<0){err.textContent="Enter both figures as non-negative numbers to run the de minimis test.";err.classList.remove('hide');return;}
+    if(nq>total){err.textContent="Non-qualifying revenue cannot exceed total revenue. Check the figures.";err.classList.remove('hide');return;}
+    err.classList.add('hide');
+    // Lead capture is required to view the result. Inputs are valid, so
+    // gate the computation behind the lead form (shown only once per browser).
+    requireLeadCapture(function(){ computeDeMinimis(total,nq,mode,qa,hadNaturalExcl); });
+  };
+}
+
+function computeDeMinimis(total,nq,mode,qa,hadNaturalExcl){
+    const fivePct=total*0.05,limit=Math.min(fivePct,5000000);
+    const pctStr=total>0?(nq/total*100).toFixed(2):"0.00";
+    const nqStr=nq.toLocaleString('en-AE',{maximumFractionDigits:0}),limitStr=limit.toLocaleString('en-AE',{maximumFractionDigits:0}),fivePctStr=fivePct.toLocaleString('en-AE',{maximumFractionDigits:0});
+    record("Total revenue (AED)",total.toLocaleString('en-AE'),"");
+    record("Non-qualifying revenue (AED)",nqStr+" ("+pctStr+"%)",nq>limit?"no":"yes");
+    if(nq>limit){
+      fail(7,"De minimis limit breached — QFZP status is lost.",
+        `Non-qualifying revenue of <b>AED ${nqStr}</b> exceeds the de minimis limit of <b>AED ${limitStr}</b> (the lower of 5% of total revenue = AED ${fivePctStr}, or AED 5,000,000). The entity is <b>not a QFZP</b>: <b>all</b> of its Taxable Income is taxed under the standard rules (0% up to AED 375,000, then 9%), and it cannot be a QFZP for this tax period and the following four.`,
+        [{t:"The de minimis test is a hard cap, not a partial relief.",b:"Non-qualifying revenue must not exceed the lower of 5% of total revenue or AED 5,000,000. Exceeding it is a failure of a QFZP condition — it does not merely tax the excess, it removes QFZP status altogether.",c:CITE.deminimis},
+         {t:"Multi-period consequence.",b:"Because a condition is breached, the entity ceases to be a QFZP from the start of this tax period and for the subsequent four tax periods.",c:CITE.breach}]);
+      return;
+    }
+    const facts=[];
+    if(mode==='fz_ok')facts.push({t:"Qualifying Income — Free Zone counterparty.",b:"Income from a transaction with a Free Zone Person that is the Beneficial Recipient is Qualifying Income, provided it is not an Excluded Activity. You confirmed both.",c:CITE.qi_fzp});
+    else if(mode==='nonfz_ok'){const act=qa?QA_LIST.find(x=>x.k===qa.k):null;facts.push({t:"Qualifying Income — Non-Free Zone counterparty.",b:`Income from a Non-Free Zone Person is Qualifying Income only where it arises from a Qualifying Activity that is not an Excluded Activity. The selected activity${act?` (${act.t})`:''} is a Qualifying Activity under MD 229/2025.`,c:act?act.c:CITE.qi_nonfz});
+      if(hadNaturalExcl)facts.push({t:"Natural-person sales are an Excluded Activity.",b:"You indicated this stream includes transactions with natural persons, and this activity is not one of the four carve-outs (ships, fund management, wealth management, aircraft). Revenue from those natural-person transactions is non-qualifying and must be included in the non-qualifying revenue figure above; only the business-to-business portion is Qualifying Income.",c:CITE.natural});}
+    else if(mode==='conduit')facts.push({t:"This income is non-qualifying — Free Zone conduit.",b:"Because the Free Zone counterparty is not the Beneficial Recipient (it must on-supply the good or service), this income is non-qualifying revenue. It does not benefit from 0%, but staying within the de minimis limit preserves QFZP status for the entity's Qualifying Income.",c:CITE.beneficial});
+    else if(mode==='excluded')facts.push({t:"This income is non-qualifying — Excluded Activity.",b:"Income from an Excluded Activity is not Qualifying Income even where the customer is a Free Zone Person. It is non-qualifying revenue: taxable at 9%, and counted toward the de minimis limit. Staying within that limit preserves QFZP status for the entity's other Qualifying Income.",c:CITE.excl});
+    facts.push({t:"De minimis satisfied.",b:`Non-qualifying revenue of AED ${nqStr} is ${pctStr}% of total revenue and is at or below the limit of AED ${limitStr} (lower of 5% = AED ${fivePctStr}, or AED 5,000,000). The condition is met.`,c:CITE.deminimis});
+    if(nq>0){
+      facts.push({t:"Non-qualifying income is still taxed.",b:"Staying within the de minimis limit preserves QFZP status, but non-qualifying income is not exempt — it is taxable at 9%. Only the Qualifying Income enjoys the 0% rate.",c:CITE.qiFramework});
+      const headline = (mode==='conduit')
+        ? "Qualifies as a QFZP — the conduit income is taxed at 9%."
+        : (mode==='excluded')
+        ? "Qualifies as a QFZP — the Excluded-Activity income is taxed at 9%."
+        : "Qualifies as a QFZP — with a 9% carve-out on non-qualifying income.";
+      review(headline,`<b>0%</b> on Qualifying Income, and <b>9%</b> on the AED ${nqStr} of non-qualifying income. QFZP status is preserved because non-qualifying revenue is within the de minimis limit.`,facts);
+    } else {
+      pass("Qualifies as a Qualifying Free Zone Person.",`<b>0% Corporate Tax</b> applies to the Qualifying Income on the facts entered. (Any income attributable to a permanent establishment or to non-commercial immovable property would remain taxable at 9% — see scope note below.)`,facts);
+    }
+}
+
+function start(){trail=[];stepStack=[];answers={};trailMarks=[];answersMarks=[];STAGE.innerHTML='';push(step1);}
+
+start();
+</script>
+</body>
+</html>
