@@ -141,7 +141,11 @@
     .head-top{flex-direction:row;align-items:center;gap:8px}
     .explore{align-self:center;padding:6px 10px;font-size:10px;white-space:normal;text-align:center;flex-shrink:0}
     .explore svg{display:none}
-    .card{padding:20px 18px}.verdict{padding:20px}.pip .lbl-txt{display:none}.info .tip{width:min(280px,80vw)}
+    .card{padding:20px 18px}.verdict{padding:20px}.pip .lbl-txt{display:none}
+    .info .tip{width:min(260px,72vw);left:0;right:auto;transform:none}
+    .info .tip::after{left:16px;transform:none}
+    .info.tip-left .tip{left:auto;right:0}
+    .info.tip-left .tip::after{left:auto;right:16px}
   }
 @media print{
     .opt,.btn,.back,.progress,.explore,.info,.lead-modal{display:none!important}
