@@ -20,7 +20,7 @@
   header.masthead{border-bottom:3px double var(--navy);padding-bottom:18px;margin-bottom:8px;position:sticky;top:0;background:var(--paper);z-index:100;padding-top:12px}
   .head-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
   .eyebrow{font-family:'Helvetica Neue',Arial,sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:10px}
-  h1{font-size:30px;line-height:1.15;color:var(--navy);font-weight:400;letter-spacing:-.01em}
+  h1{font-size:30px;line-height:1.15;color:#0D1E30;font-weight:700;letter-spacing:-.01em}
   h1 .rate{color:var(--gold);font-style:italic}
   .sub{margin-top:10px;color:var(--ink-soft);font-size:15px;max-width:640px}
   .explore{flex-shrink:0;margin-bottom:3px;font-family:'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:13px;letter-spacing:.03em;color:var(--navy);background:transparent;border:1.5px solid var(--navy);border-radius:8px;padding:9px 16px;text-decoration:none;transition:.15s;white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
@@ -135,8 +135,12 @@
   .lead-error{color:var(--red);font-size:12px;display:none;margin-bottom:12px;font-family:'Helvetica Neue',Arial,sans-serif}
   .lead-box .btn{width:100%;justify-content:center;margin-top:4px}
 
-  @media (max-width:560px){
-    h1{font-size:23px}.head-top{flex-direction:column}.explore{align-self:flex-start}
+@media (max-width:560px){
+    header.masthead{padding-bottom:10px;margin-bottom:6px}
+    .eyebrow{font-size:10px;margin-bottom:6px}
+    h1{font-size:20px;line-height:1.2}
+    .head-top{flex-direction:column;gap:10px}
+    .explore{align-self:flex-start;padding:7px 13px;font-size:12px}
     .card{padding:20px 18px}.verdict{padding:20px}.pip .lbl-txt{display:none}.info .tip{width:min(280px,80vw)}
   }
   @media print{
@@ -178,7 +182,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H8M17 7v9"/></svg>
       </a>
     </div>
-    <p class="sub">A step-by-step decision tree that tests your Free Zone entity against every cumulative condition in the law. Each answer is checked against the exact article that governs it.</p>
   </header>
 
   <div class="legal-strip">
