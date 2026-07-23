@@ -301,8 +301,10 @@ function tip(text,cite){return `<span class="info" tabindex="0">i<span class="ti
    position in the flow, with a short descriptive name. */
 function stepLabel(name){
   const d=stepStack.length;
-  const nm = name || (d<=CORE_LABELS.length ? CORE_LABELS[d-1] : '');
-  return `Step ${d}${nm?` · ${nm}`:''}`;
+  const total=CORE_LABELS.length;
+  const nm = name || (d<=total ? CORE_LABELS[d-1] : '');
+  const num = d<=total ? `${d}` : `${total+1}.${d-total}`;
+  return `Step ${num}${nm?` · ${nm}`:''}`;
 }
 
 /* Progress reflects actual depth. The first five gates are labelled; once
