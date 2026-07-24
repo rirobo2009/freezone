@@ -538,10 +538,13 @@ function step6_b(){
       {key:'A',label:'A Non-Free Zone Person (mainland UAE, foreign business, or consumer)',
         tipHTML:tip("Any person who is not a Free Zone Person. Income qualifies only where it arises from a Qualifying Activity that is not an Excluded Activity.",CITE.qi_nonfz),
         action:()=>{answers.cp='nonfz';record("Counterparty detail","Non-Free Zone Person","");push(step6_nonfz);}},
-      {key:'B',label:'A Free Zone counterparty that is only a conduit (not the Beneficial Recipient)',
+{key:'B',label:'A Free Zone counterparty that is only a conduit (not the Beneficial Recipient)',
         sub:"e.g. contractually obliged to on-supply the goods/services to someone else",
-        tipHTML:tip("Where the Free Zone counterparty must pass the good or service on to another person, it is not the Beneficial Recipient, so the income is non-qualifying revenue for the de minimis test.",CITE.beneficial),
-        action:()=>{answers.cp='conduit';record("Counterparty detail","Free Zone conduit — not Beneficial Recipient","no");push(()=>step8('conduit'));}}
+        tipHTML:tip("Where the Free Zone counterparty must pass the good or service on to another person, it is not the Beneficial Recipient, so the income is non-qualifying revenue.",CITE.beneficial),
+        action:()=>{answers.cp='conduit';record("Counterparty detail","Free Zone conduit — not Beneficial Recipient","no");
+          fail(6,"This income stream does not qualify — the Free Zone counterparty is a conduit.","This stream is <b>non-qualifying revenue</b>, taxable at <b>9%</b>. It is not Qualifying Income because the Free Zone counterparty is not the Beneficial Recipient — it is obliged to pass the good or service on to someone else.",
+          [{t:"Only income to a Beneficial Recipient can qualify.",b:"A Free Zone Person's income only qualifies where that Free Zone Person is the Beneficial Recipient, meaning it has the right to use and enjoy the good or service with no obligation to pass it on. A conduit does not meet this test, regardless of the activity.",c:CITE.beneficial},
+           {t:"This is a single-stream result, not an entity-level QFZP verdict.",b:"This tool assesses one income stream at a time. Whether this non-qualifying amount, combined with the entity's other income, breaches the de minimis limit (and so affects the entity's overall QFZP status) depends on total revenue this tool has not captured. Check that separately or with your adviser.",c:CITE.deminimis}]);}}
     ],'Counterparty');
   mount(node,'step');fixTooltips();
 }
@@ -551,9 +554,12 @@ function step6_fz(){
     `Income from a Free Zone Person (as Beneficial Recipient) is Qualifying Income <strong>unless</strong> it falls within an Excluded Activity.`,
     [
       {key:'A',label:'No — it is not an Excluded Activity',action:()=>{record("Is it an Excluded Activity?","No","yes");push(()=>step8('fz_ok'));}},
-      {key:'B',label:'Yes — it is an Excluded Activity',
+{key:'B',label:'Yes — it is an Excluded Activity',
         tipHTML:tip("Banking, insurance (non-reinsurance), non-carve-out finance/leasing, transactions with natural persons outside the carve-outs, or ownership/exploitation of non-qualifying immovable property.",CITE.excl),
-        action:()=>{record("Is it an Excluded Activity?","Yes — Excluded Activity","no");push(()=>step8('excluded'));}}
+        action:()=>{record("Is it an Excluded Activity?","Yes — Excluded Activity","no");
+          fail(6,"This income stream does not qualify — it is an Excluded Activity.","This stream is <b>non-qualifying revenue</b>, taxable at <b>9%</b>. It is not Qualifying Income even though the counterparty is a Free Zone Person, because it falls within an Excluded Activity.",
+          [{t:"Excluded Activities never produce Qualifying Income.",b:"Income from a Free Zone Person qualifies unless it is from an Excluded Activity. This stream is one, so it is taxed at 9% rather than 0%.",c:CITE.excl},
+           {t:"This is a single-stream result, not an entity-level QFZP verdict.",b:"This tool assesses one income stream at a time. Whether this non-qualifying amount, combined with the entity's other income, breaches the de minimis limit (and so affects the entity's overall QFZP status) depends on total revenue this tool has not captured. Check that separately or with your adviser.",c:CITE.deminimis}]);}}
     ],'Excluded-activity check');
   mount(node,'step');fixTooltips();
 }
